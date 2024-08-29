@@ -1,9 +1,10 @@
 import express from 'express';
+import { connectDB } from './utils/features.js';
+import { errorMiddleware } from './middlewares/error.js';
 
 // importing routes
 import userRoutes from './routes/user.js'
-import { connectDB } from './utils/features.js';
-import { errorMiddleware } from './middlewares/error.js';
+import productRoutes from './routes/product.js'
 
 const port = 3000;
 
@@ -17,8 +18,12 @@ app.get('/', (req, res) => {
     return res.status(404).send('API is not working');
 })
 
+// using routes
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/product', productRoutes);
 
+
+app.use('/uploads',express.static('uploads'));
 app.use(errorMiddleware)
 
 app.listen(port, () => {
