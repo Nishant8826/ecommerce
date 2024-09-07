@@ -30,8 +30,14 @@ export type SearchRequestQuery = {
 export type BaseQuery = {
     name?: {
         $regex: string,
-        $option: string
+        $options: string
     },
     price?: { $lte: number },
     category?: string
+}
+
+export type InvalidateCache = {
+    product? : boolean,
+    order? : boolean,
+    admin? : boolean,
 }
