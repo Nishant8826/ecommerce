@@ -1,10 +1,10 @@
 import mongoose from "mongoose"
-import { InvalidateCache } from "../types/types.js";
+import { InvalidateCache, OrderItemType } from "../types/types.js";
 import { myCache } from "../app.js";
 import { Product } from "../models/products.js";
 
-export const connectDB = () => {
-    mongoose.connect('mongodb://localhost:27017', {
+export const connectDB = (uri: string) => {
+    mongoose.connect(uri, {
         dbName: 'Ecommerce'
     }).then((c) => {
         console.log("DB connected to", c.connection.host);
@@ -31,3 +31,14 @@ export const invalidateCache = async ({ product, order, admin }: InvalidateCache
 
     }
 }
+
+export const reduceStock = async (orderItem: OrderItemType[]) => {
+    for (let i = 0; i < orderItem.length; i++) {
+        const order = orderItem[i];
+        const product = await Product.findById(order.productId);
+        if (!product) throw new Error('Product not Found');
+        product.stock -= order.quantity;
+        await product.save();
+    }
+
+} 
