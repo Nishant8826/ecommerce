@@ -72,3 +72,8 @@ export interface NewOrderRequestBody {
     total: number,
     orderItems: OrderItemType[],
 }
+
+export interface NewCouponBody {
+    code: string,
+    amount: number
+}
