@@ -10,6 +10,7 @@ import productRoutes from './routes/product.js'
 import orderRoutes from './routes/order.js'
 import paymentRoutes from './routes/payment.js'
 import morgan from 'morgan';
+import Stripe from 'stripe';
 
 config({
     path: './.env'
@@ -17,9 +18,11 @@ config({
 
 const port = process.env.PORT || 4000;
 const mongouri = process.env.MONGO_URI || '';
+const stripeKey = process.env.STRIPE_KEY || '';
 
 connectDB(mongouri);
 
+export const stripe = new Stripe(stripeKey);
 export const myCache = new NodeCache();
 
 const app = express();
