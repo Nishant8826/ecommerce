@@ -10,5 +10,4 @@ app.get('/coupon/all', adminOnly, allCoupons);
 app.delete('/:id', adminOnly, deleteCoupon);
 
 
-
 export default app;
