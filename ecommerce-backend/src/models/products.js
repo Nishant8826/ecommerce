@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { trim } from "validator";
+const mongoose = require("mongoose");
+const { trim } = require("validator");
 
 const schema = new mongoose.Schema({
     name: {
@@ -26,4 +26,5 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-export const Product = mongoose.model('Product', schema);
+const Product = mongoose.model('Product', schema);
+module.exports = Product;

@@ -1,9 +1,9 @@
-import { User } from "../models/user.js";
-import ErrorHandler from "../utils/utility-class.js";
-import { TryCatch } from "./error.js";
+const { User } = require("../models/user.js");
+const ErrorHandler = require("../utils/utility-class.js");
+const { TryCatch } = require("./error.js");
 
 
-export const adminOnly = TryCatch(async (req, res, next) => {
+const adminOnly = TryCatch(async (req, res, next) => {
     const { id } = req.query;
     if (!id) return next(new ErrorHandler('Please Login', 401));
     const user = await User.findById(id);
@@ -11,3 +11,5 @@ export const adminOnly = TryCatch(async (req, res, next) => {
     if (user.role !== 'admin') return next(new ErrorHandler('You are not authorized to this path.', 403));
     next();
 })
+
+module.exports = { adminOnly };

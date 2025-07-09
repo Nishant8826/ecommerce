@@ -1,5 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
-import { trim } from "validator";
+const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
     shippingInfo: {
@@ -67,4 +66,5 @@ const schema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-export const Order = mongoose.model('Order', schema);
+const Order = mongoose.model('Order', schema);
+module.exports = Order;

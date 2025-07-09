@@ -1,9 +1,9 @@
-import { User } from "../models/user.js";
-import { TryCatch } from "../middlewares/error.js";
-import ErrorHandler from "../utils/utility-class.js";
+const { User } = require("../models/user.js");
+const { TryCatch } = require("../middlewares/error.js");
+const ErrorHandler = require("../utils/utility-class.js");
 
 
-export const newUser = TryCatch(async (req, res, next) => {
+const newUser = TryCatch(async (req, res, next) => {
     const { name, photo, role, email, _id, gender, dob } = req.body;
     let user = await User.findById(_id);
     if (user) {
@@ -18,13 +18,13 @@ export const newUser = TryCatch(async (req, res, next) => {
     return res.status(201).send({ success: true, msg: `Welcome ${user.name}` });
 });
 
-export const getAllUsers = TryCatch(async (req, res, next) => {
+const getAllUsers = TryCatch(async (req, res, next) => {
     const allUsers = await User.find();
     return res.status(200).send({ success: true, result: allUsers });
 
 });
 
-export const getUser = TryCatch(async (req, res, next) => {
+const getUser = TryCatch(async (req, res, next) => {
     const id = req.params.id;
     const user = await User.findById(id);
     if (!user) return next(new ErrorHandler('Invalid Id', 400));
@@ -32,7 +32,7 @@ export const getUser = TryCatch(async (req, res, next) => {
 
 });
 
-export const deleteUser = TryCatch(async (req, res, next) => {
+const deleteUser = TryCatch(async (req, res, next) => {
     const id = req.params.id;
     const user = await User.findById(id);
     if (!user) return next(new ErrorHandler('Invalid Id', 400));
@@ -40,3 +40,5 @@ export const deleteUser = TryCatch(async (req, res, next) => {
     return res.status(200).send({ success: true, msg: 'Deleted succesfully' });
 
 });
+
+module.exports = { newUser, getAllUsers, getUser, deleteUser };

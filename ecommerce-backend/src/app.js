@@ -1,18 +1,19 @@
-import express from 'express';
-import { connectDB } from './utils/features.js';
-import { errorMiddleware } from './middlewares/error.js';
-import NodeCache from 'node-cache'
-import { config } from 'dotenv';
+
+const express = require('express');
+const { connectDB } = require('./utils/features.js');
+const { errorMiddleware } = require('./middlewares/error.js');
+const NodeCache = require('node-cache');
+const dotenv = require('dotenv');
 
 // importing routes
-import userRoutes from './routes/user.js'
-import productRoutes from './routes/product.js'
-import orderRoutes from './routes/order.js'
-import paymentRoutes from './routes/payment.js'
-import morgan from 'morgan';
-import Stripe from 'stripe';
+const orderRoutes = require('./routes/order.js');
+const userRoutes = require('./routes/user.js');
+const productRoutes = require('./routes/product.js');
+const paymentRoutes = require('./routes/payment.js');
+const morgan = require('morgan');
+const Stripe = require('stripe');
 
-config({
+dotenv.config({
     path: './.env'
 })
 
@@ -20,10 +21,11 @@ const port = process.env.PORT || 3000;
 const mongouri = process.env.MONGO_URI || '';
 const stripeKey = process.env.STRIPE_KEY || '';
 
+
 connectDB(mongouri);
 
-export const stripe = new Stripe(stripeKey);
-export const myCache = new NodeCache();
+module.exports.stripe = new Stripe(stripeKey);
+module.exports.myCache = new NodeCache();
 
 const app = express();
 

@@ -1,5 +1,5 @@
-import multer from "multer";
-import { v4 as uuid } from 'uuid';
+const multer = require("multer");
+const { v4: uuid } = require('uuid');
 
 const storage = multer.diskStorage({
     destination(req, file, callback) {
@@ -13,4 +13,5 @@ const storage = multer.diskStorage({
 });
 
 
-export const singleUpload = multer({ storage }).single('photo');
+const singleUpload = multer({ storage }).single('photo');
+module.exports = { singleUpload };
