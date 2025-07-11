@@ -16,6 +16,9 @@ const schema = new mongoose.Schema({
         unique: [true, 'Email already Exist'],
         validate: validator.default.isEmail
     },
+    password: {
+        type: String,
+    },
     photo: {
         type: String,
         required: [true, 'Please add photo']
@@ -44,5 +47,5 @@ schema.virtual('age').get(function () {
     return age;
 })
 
-const User = mongoose.model ('User', schema);
+const User = mongoose.model ('applicationusers', schema);
 module.exports = User;

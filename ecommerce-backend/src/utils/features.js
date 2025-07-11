@@ -6,7 +6,7 @@ const connectDB = (uri) => {
     mongoose.connect(uri, {
         dbName: 'Ecommerce'
     }).then((c) => {
-        console.log("DB connected to", c.connection.host);
+        console.log("DB connected");
     }).catch((e) => console.log(e));
 }
 

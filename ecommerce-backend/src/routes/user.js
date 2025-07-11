@@ -1,9 +1,10 @@
 const express = require("express");
-const { getAllUsers, newUser, getUser, deleteUser } = require("../controllers/user.js");
+const { getAllUsers, newUserViaFB, getUser, deleteUser, login } = require("../controllers/user.js");
 const { adminOnly } = require("../middlewares/auth.js");
 const orderRoutes = express.Router();
 
-orderRoutes.post('/new', newUser);
+orderRoutes.post('/login', login);
+orderRoutes.post('/new', newUserViaFB);
 orderRoutes.get('/getall', adminOnly, getAllUsers);
 orderRoutes.get('/:id', getUser)
 orderRoutes.delete('/:id', adminOnly, deleteUser)

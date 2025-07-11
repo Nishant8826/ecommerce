@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 import Loader from "./components/Loader";
 import Header from "./components/Header";
 import OrderDetail from "./pages/OrderDetail";
+import { Toaster } from "react-hot-toast";
 
 const Home = lazy(() => import("./pages/Home"));
 const Search = lazy(() => import("./pages/Search"));
@@ -27,13 +28,13 @@ function App() {
 
           {/* Logged In User Routes */}
           {/* <Routes> */}
-            <Route path="/shipping" element={<Shipping />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/order/:id" element={<OrderDetail />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/order/:id" element={<OrderDetail />} />
           {/* </Routes> */}
         </Routes>
       </Suspense>
-
+      <Toaster position="bottom-center" />
     </Router>
   );
 }

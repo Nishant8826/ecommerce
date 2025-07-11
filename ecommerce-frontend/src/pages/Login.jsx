@@ -10,6 +10,9 @@ const Login = () => {
     const changeHandler = (e) => {
         setUser(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
+    const loginHandler = async () => {
+        
+    }
     return (
         <div className='login'>
             <main>
