@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
-const user = { "_id": "sdc", "role": "admin" };
+const user = { "_id": "", "role": "" };
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +12,7 @@ const Header = () => {
     }
     return (
         <nav className="header">
-            <Link to={'/'}>Home</Link>
+            <Link to={'/'}>HOME</Link>
             <Link to={'/search'}><FaSearch /></Link>
             <Link to={'/cart'}><FaShoppingBag /></Link>
 
