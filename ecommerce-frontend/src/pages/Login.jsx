@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
-import { FaFacebook, FaGithub } from 'react-icons/fa'
-import { FcGoogle } from 'react-icons/fc'
+import { useState } from 'react'
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../services/api';
+import { useDispatch } from 'react-redux';
+import { storeUser } from '../redux/reducer/userSlice';
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         email: "",
         password: ""
@@ -10,9 +15,22 @@ const Login = () => {
     const changeHandler = (e) => {
         setUser(prev => ({ ...prev, [e.target.name]: e.target.value }))
     }
-    const loginHandler = async () => {
-        
+    const loginHandler = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await login(user);
+            const result = response?.data;
+            if (result) {
+                dispatch(storeUser(result.result?.user));
+                toast(result.msg);
+                navigate('/')
+            }
+        } catch (error) {
+            console.log('Error :', error);
+            toast(error.message);
+        }
     }
+
     return (
         <div className='login'>
             <main>
@@ -20,23 +38,9 @@ const Login = () => {
                     <h1>Login</h1>
                     <input type="email" placeholder="Email" name="email" value={user.email} required onChange={changeHandler} />
                     <input type="password" placeholder="Password" name="password" value={user.password} required onChange={changeHandler} />
-                    <button type="submit">Login</button>
+                    <button type="submit" onClick={loginHandler}>Login</button>
+                    <p>Don't have an account? <Link to={'/signup'}>Register here.</Link></p>
                 </form>
-                <div className='br'></div>
-                <div className='google-btn'>
-                    <button >
-                        <FcGoogle />
-                    </button>
-
-                    <button >
-                        <FaFacebook />
-                    </button>
-
-                    <button >
-                        <FaGithub />
-                    </button>
-                </div>
-
             </main>
         </div>
     )

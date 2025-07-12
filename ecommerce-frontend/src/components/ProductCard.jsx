@@ -1,6 +1,5 @@
 import { FaPlus } from "react-icons/fa"
 
-const server = 'http://localhost:3000/'
 
 const ProductCard = ({ productId, name, photo, stock, price, handler }) => {
     return (

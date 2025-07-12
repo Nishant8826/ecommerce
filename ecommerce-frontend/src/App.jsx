@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import Loader from "./components/Loader";
 import Header from "./components/Header";
 import OrderDetail from "./pages/OrderDetail";
 import { Toaster } from "react-hot-toast";
+import Signup from "./pages/Signup";
+import { useSelector } from "react-redux";
 
 const Home = lazy(() => import("./pages/Home"));
 const Search = lazy(() => import("./pages/Search"));
@@ -14,10 +16,13 @@ const Orders = lazy(() => import("./pages/Orders"));
 
 
 function App() {
+
+  const user = useSelector((state) => state.user.user)
+
   return (
     <Router>
       <Suspense fallback={<Loader />}>
-        <Header />
+        <Header user={user} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
@@ -25,6 +30,7 @@ function App() {
 
           {/* Not Logged In Route */}
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
           {/* Logged In User Routes */}
           {/* <Routes> */}
