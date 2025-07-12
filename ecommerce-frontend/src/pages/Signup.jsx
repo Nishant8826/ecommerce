@@ -32,8 +32,8 @@ const Signup = () => {
             const result = response.data?.result;
             if (result.user) {
                 dispatch(storeUser(result.user));
-                toast(result.msg);
                 navigate('/')
+                toast.success('Signed in successfully');
             }
         } catch (error) {
             console.log("Error");
@@ -58,6 +58,7 @@ const Signup = () => {
             if (result.user) {
                 dispatch(storeUser(result.user));
                 navigate('/')
+                toast.success('Signed in successfully');
             }
         } catch (error) {
             console.log('Error occured', error);

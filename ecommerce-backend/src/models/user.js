@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const schema = new mongoose.Schema({
-    _id: {
-        type: String,
-        required: [true, 'Please enter ID']
-    },
     name: {
         type: String,
         required: [true, 'Please enter Name']
@@ -21,7 +17,6 @@ const schema = new mongoose.Schema({
     },
     photo: {
         type: String,
-        required: [true, 'Please add photo']
     },
     role: {
         type: String,
@@ -31,21 +26,11 @@ const schema = new mongoose.Schema({
     gender: {
         type: String,
         enum: ['male', 'female'],
-        required: [true, 'Please enter gender']
     },
     dob: {
         type: Date,
-        required: [true, 'Please enter Date of Birth']
     },
 }, { timestamps: true });
 
-schema.virtual('age').get(function () {
-    const today = new Date();
-    const dob = this.dob;
-    let age = today.getFullYear() - dob.getFullYear();
-
-    return age;
-})
-
-const User = mongoose.model ('applicationusers', schema);
+const User = mongoose.model ('User', schema);
 module.exports = User;

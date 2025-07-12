@@ -6,6 +6,7 @@ import OrderDetail from "./pages/OrderDetail";
 import { Toaster } from "react-hot-toast";
 import Signup from "./pages/Signup";
 import { useSelector } from "react-redux";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const Home = lazy(() => import("./pages/Home"));
 const Search = lazy(() => import("./pages/Search"));
@@ -17,7 +18,7 @@ const Orders = lazy(() => import("./pages/Orders"));
 
 function App() {
 
-  const user = useSelector((state) => state.user.user)
+  const { user, loading } = useSelector((state) => state.user)
 
   return (
     <Router>
@@ -29,19 +30,22 @@ function App() {
           <Route path="/cart" element={<Cart />} />
 
           {/* Not Logged In Route */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route element={<ProtectedRoute isAuthenticated={user ? false : true} />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Route>
 
           {/* Logged In User Routes */}
-          {/* <Routes> */}
-          <Route path="/shipping" element={<Shipping />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/order/:id" element={<OrderDetail />} />
-          {/* </Routes> */}
+          <Route element={<ProtectedRoute isAuthenticated={user ? true : false} />}>
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/order/:id" element={<OrderDetail />} />
+          </Route>
         </Routes>
       </Suspense>
       <Toaster position="bottom-center" />
     </Router>
+
   );
 }
 

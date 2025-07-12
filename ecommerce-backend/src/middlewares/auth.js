@@ -1,4 +1,4 @@
-const { User } = require("../models/user.js");
+const User = require("../models/user.js");
 const ErrorHandler = require("../utils/utility-class.js");
 const { TryCatch } = require("./error.js");
 

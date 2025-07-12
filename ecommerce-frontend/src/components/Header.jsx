@@ -3,13 +3,15 @@ import { FaSearch, FaShoppingBag, FaSignInAlt, FaSignOutAlt, FaUser } from "reac
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom"
 import { clearUser } from "../redux/reducer/userSlice";
+import toast from "react-hot-toast";
 
-const Header = ({user}) => {
+const Header = ({ user }) => {
     const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
     const logoutHandler = () => {
         setIsOpen(false);
         dispatch(clearUser());
+        toast.success('Signed out Successfully')
     }
 
     return (

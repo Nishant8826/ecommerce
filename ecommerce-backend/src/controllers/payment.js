@@ -1,6 +1,6 @@
 const { TryCatch } = require("../middlewares/error.js");
 const ErrorHandler = require("../utils/utility-class.js");
-const { Coupon } = require("../models/coupon.js");
+const Coupon = require("../models/coupon.js");
 const stripe = require("../app.js");
 
 

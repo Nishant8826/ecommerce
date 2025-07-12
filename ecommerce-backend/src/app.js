@@ -1,23 +1,23 @@
 
 const express = require('express');
-const { connectDB } = require('./utils/features.js');
 const { errorMiddleware } = require('./middlewares/error.js');
-const NodeCache = require('node-cache');
 const dotenv = require('dotenv');
+const { connectDB } = require('./config/db.js');
+const morgan = require('morgan');
+const Stripe = require('stripe');
+const cors = require('cors');
 
 // importing routes
 const orderRoutes = require('./routes/order.js');
 const userRoutes = require('./routes/user.js');
 const productRoutes = require('./routes/product.js');
 const paymentRoutes = require('./routes/payment.js');
-const morgan = require('morgan');
-const Stripe = require('stripe');
 
 dotenv.config({
     path: './.env'
 })
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 const mongouri = process.env.MONGO_URI || '';
 const stripeKey = process.env.STRIPE_KEY || '';
 
@@ -25,12 +25,12 @@ const stripeKey = process.env.STRIPE_KEY || '';
 connectDB(mongouri);
 
 module.exports.stripe = new Stripe(stripeKey);
-module.exports.myCache = new NodeCache();
 
 const app = express();
 
 app.use(express.json());
 app.use(morgan('common'));
+app.use(cors());
 
 app.get('/', (req, res) => {
     return res.status(404).send('API is not working');
