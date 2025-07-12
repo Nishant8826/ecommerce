@@ -5,8 +5,10 @@ import Header from "./components/Header";
 import OrderDetail from "./pages/OrderDetail";
 import { Toaster } from "react-hot-toast";
 import Signup from "./pages/Signup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { storeUser } from "./redux/reducer/userSlice";
+import Cookies from 'js-cookie';
 
 const Home = lazy(() => import("./pages/Home"));
 const Search = lazy(() => import("./pages/Search"));
@@ -17,8 +19,22 @@ const Orders = lazy(() => import("./pages/Orders"));
 
 
 function App() {
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.user)
+  useEffect(() => {
+    const token = Cookies.get('token');
+    const userCookie = Cookies.get('user');
+
+    if (token && userCookie) {
+      try {
+        const user = JSON.parse(userCookie);
+        dispatch(storeUser({ user, token }));
+      } catch (error) {
+        console.error('Error parsing user from cookies:', error);
+      }
+    }
+  }, [])
 
   return (
     <Router>

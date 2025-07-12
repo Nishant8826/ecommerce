@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { FaFacebook, FaGithub } from 'react-icons/fa'
 import { FcGoogle } from 'react-icons/fc'
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from '../firebase';
 import { Link, useNavigate } from 'react-router-dom';
 import { addUserViaGoogle, checkEmailExist, newUser } from '../services/api';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { storeUser } from '../redux/reducer/userSlice';
+import { auth } from '../config/firebase';
 
 const Signup = () => {
     const dispatch = useDispatch();
@@ -29,11 +28,13 @@ const Signup = () => {
         e.preventDefault();
         try {
             const response = await newUser(userInfo);
-            const result = response.data?.result;
-            if (result.user) {
-                dispatch(storeUser(result.user));
+            const result = response.data;
+            if (result.success) {
+                dispatch(storeUser(result));
                 navigate('/')
                 toast.success('Signed in successfully');
+            } else {
+                toast.error(result.msg)
             }
         } catch (error) {
             console.log("Error");
@@ -54,11 +55,13 @@ const Signup = () => {
                 _id: user.uid,
             }
             const response = await addUserViaGoogle(googleObj);
-            const result = response.data?.result;
-            if (result.user) {
-                dispatch(storeUser(result.user));
+            const result = response.data;
+            if (result.success) {
+                dispatch(storeUser(result));
                 navigate('/')
                 toast.success('Signed in successfully');
+            } else {
+                toast.error(result.msg)
             }
         } catch (error) {
             console.log('Error occured', error);

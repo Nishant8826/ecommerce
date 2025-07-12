@@ -20,14 +20,16 @@ const Login = () => {
         try {
             const response = await login(user);
             const result = response?.data;
-            if (result) {
-                dispatch(storeUser(result.result?.user));
-                toast(result.msg);
+            if (result?.success) {
+                dispatch(storeUser(result));
+                toast.success(result.msg);
                 navigate('/')
+            } else {
+                toast.error(result.msg);
             }
         } catch (error) {
             console.log('Error :', error);
-            toast(error.message);
+            toast.error(error.message);
         }
     }
 

@@ -89,19 +89,19 @@ body{
 
 .productcard{
   width: 18.75rem;
-  height: 20rem;
+  height: 19.50rem;
   padding: 1rem;
   flex: none;
   @include flex(column,flex-start,center,4px);
   position: relative;
   background-color: white;
-
+  text-align: center;
   &:hover > div{
     opacity: 1;
   }
 
   img{
-    @include square(calc(18.75rem - 3rem));
+    @include square(calc(18.75rem - 6rem));
     object-fit:contain;
     // margin: 1rem;
   }

@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ProductCard from "../components/ProductCard";
+import { getAllProducts } from "../services/api";
+import { domainUrl } from "../config/config";
 
 const Search = () => {
 
+  const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
   const [category, setCategory] = useState("");
@@ -13,6 +16,20 @@ const Search = () => {
 
   const isPrevPage = false;
   const isNextPage = true;
+
+  const getAllProduct = async () => {
+    try {
+      const response = await getAllProducts()
+      response.data?.succes ? setProducts(response.data?.result) : setProducts([]);
+
+    } catch (error) {
+      console.log('Error occured :', error);
+    }
+  }
+
+  useEffect(() => {
+    getAllProduct();
+  }, [])
 
   return (
     <div className="product-search">
@@ -42,8 +59,11 @@ const Search = () => {
       <main>
         <h1>Products</h1>
         <input type="text" placeholder="Search" value={search} onChange={(e) => setSearch(e.target.value)} />
-        <div>
-          <ProductCard productId={"sdcsdc"} name={"Macbook"} price={"23234"} stock={"3"} handler={addToCardHandler} photo={"https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTF5lgmxR1a6b-qtP9f-eMPbK0YMBfnqqwDfqozhI06vF-Zc5YxdPlNOgvUIrpqAwoMA0Y_Die_937n8Am5WWKI5CCUOspHUUYCROtXSsbW"} />
+        <div className="search-product-list">
+          {products.length > 0 ? products.map((item, index) => (
+            <ProductCard productId={item._id} name={item.name} price={item.price} stock={item.stock} handler={addToCardHandler} photo={`${domainUrl}/${item.photo}`} />
+          )) :
+            <p>No products available.</p>}
         </div>
 
         <article>

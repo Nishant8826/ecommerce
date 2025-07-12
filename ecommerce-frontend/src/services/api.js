@@ -1,6 +1,6 @@
 import axios from "axios";
+import { baseUrl } from "../config/config";
 
-export const baseUrl = 'http://localhost:5000/api/v1';
 
 export const login = async (data) => {
     try {
@@ -46,3 +46,24 @@ export const checkEmailExist = async (email) => {
         console.log('Error while addUser : ', error.message);
     }
 }
+
+
+export const getLatestProducts = async () => {
+    try {
+        const result = await axios.get(`${baseUrl}/product/latest`);
+        return result;
+    } catch (error) {
+        console.log('Error while addUser : ', error.message);
+    }
+}
+
+
+export const getAllProducts = async () => {
+    try {
+        const result = await axios.get(`${baseUrl}/product/all`);
+        return result;
+    } catch (error) {
+        console.log('Error while addUser : ', error.message);
+    }
+}
+
