@@ -4,6 +4,11 @@
   min-height: calc(100vh - 6.5vh);
 
   > aside {
+    height: 85vh;
+    position: sticky ;
+    z-index: 10;
+    top: 0%;
+     background: white;
     min-width: 20rem;
     box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.247);
     padding: 2rem;
@@ -41,7 +46,6 @@
       @include flex(row, flex-start, flex-start);
       flex-wrap: wrap;
       height: calc(100% - 10rem);
-      overflow-y: auto;
     }
     article {
       @include flex;

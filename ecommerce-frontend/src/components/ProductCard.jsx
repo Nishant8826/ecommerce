@@ -6,7 +6,7 @@ const ProductCard = ({ productId, name, photo, stock, price, handler }) => {
         <div className="productcard">
             <img src={photo} alt={name} />
             <p>{name}</p>
-            <span>₹{price}</span>
+            <span>₹{new Intl.NumberFormat('en-IN').format(price)}</span>
 
             <div>
                 <button onClick={handler}>

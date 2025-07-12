@@ -40,7 +40,7 @@ export const getUser = async (id) => {
 
 export const checkEmailExist = async (email) => {
     try {
-        const result = await axios.post(`${baseUrl}/user/checkEmailExist`,email);
+        const result = await axios.post(`${baseUrl}/user/checkEmailExist`, email);
         return result;
     } catch (error) {
         console.log('Error while addUser : ', error.message);
@@ -58,9 +58,21 @@ export const getLatestProducts = async () => {
 }
 
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (queryParams = {}) => {
     try {
-        const result = await axios.get(`${baseUrl}/product/all`);
+        const result = await axios.get(`${baseUrl}/product/all`, {
+            params: queryParams
+        });
+        return result;
+    } catch (error) {
+        console.log('Error while addUser : ', error.message);
+    }
+}
+
+
+export const getAllCategories = async () => {
+    try {
+        const result = await axios.get(`${baseUrl}/product/categories`);
         return result;
     } catch (error) {
         console.log('Error while addUser : ', error.message);
