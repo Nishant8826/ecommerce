@@ -9,15 +9,12 @@ const newUser = TryCatch(async (req, res, next) => {
     if (!name || !email || !password) {
         return next(new ErrorHandler('Please add all fields', 200));
     };
-    let result = {}
     password = await bcrypt.hash(password, 12);
     const user = await User.create({
         name, photo, role, email, gender, dob, password
     });
     let token = await jwt.sign(user.toObject(), process.env.JWT_SECRET || 'Ecommerce by Nishant Rathore', { expiresIn: '1d' })
-    result.token = token
-    result.user = user;
-    return res.status(201).send({ success: true, result });
+    return res.status(201).send({ success: true, token, user, msg: `Welcome ${user.name}` });
 });
 
 const newUserViaGoogle = TryCatch(async (req, res, next) => {
@@ -25,27 +22,21 @@ const newUserViaGoogle = TryCatch(async (req, res, next) => {
     if (!name || !email) {
         return next(new ErrorHandler('Please add all fields', 200));
     };
-    let result = {}
     let user = await User.findOne({ email });
     if (user) {
         const token = await jwt.sign(user.toObject(), process.env.JWT_SECRET || 'Ecommerce by Nishant Rathore', { expiresIn: '1d' });
-        result.token = token
-        result.user = user;
-        return res.status(200).send({ success: true, result });
+        return res.status(200).send({ success: true, token, user, msg: `Welcome ${user.name}` });
     };
     user = await User.create({
         name, photo, role, email, gender, dob
     });
     const token = await jwt.sign(user.toObject(), process.env.JWT_SECRET || 'Ecommerce by Nishant Rathore', { expiresIn: '1d' });
-    result.token = token
-    result.user = user;
-    return res.status(201).send({ success: true, result });
+    return res.status(201).send({ success: true, token, user, msg: `Welcome ${user.name}` });
 });
 
 const login = TryCatch(async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) return next(new ErrorHandler(`Email and Password are required`, 200));
-    let result = {};
     let user = await User.findOne({ email });
     if (!user) return next(new ErrorHandler(`Email not found`, 404));
     if (user.password) {
@@ -54,9 +45,7 @@ const login = TryCatch(async (req, res, next) => {
     }
     const plainUser = user.toObject();
     const token = await jwt.sign(plainUser, process.env.JWT_SECRET || 'Ecommerce by Nishant Rathore', { expiresIn: '1d' });
-    result.token = token
-    result.user = plainUser;
-    return res.status(200).send({ success: true, result, msg: `Welcome ${user.name}`, user });
+    return res.status(200).send({ success: true, msg: `Welcome ${user.name}`, user, token });
 
 })
 
