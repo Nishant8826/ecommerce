@@ -1,2 +1,2 @@
-export const baseUrl = 'http://localhost:5000/api/v1';
-export const domainUrl = 'http://localhost:5000';
+export const baseUrl = 'https://ecommerce-xwr8.onrender.com/api/v1';
+export const domainUrl = 'https://ecommerce-xwr8.onrender.com';
