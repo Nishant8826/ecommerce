@@ -13,6 +13,8 @@ const userRoutes = require('./routes/user.js');
 const productRoutes = require('./routes/product.js');
 const paymentRoutes = require('./routes/payment.js');
 
+const app = express();
+app.use(cors());
 dotenv.config({
     path: './.env'
 })
@@ -26,11 +28,9 @@ connectDB(mongouri);
 
 module.exports.stripe = new Stripe(stripeKey);
 
-const app = express();
 
 app.use(express.json());
 app.use(morgan('common'));
-app.use(cors());
 
 app.get('/', (req, res) => {
     return res.status(404).send('API is not working');
